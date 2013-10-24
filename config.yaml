@@ -1,0 +1,55 @@
+accessControl:
+  enabled: false
+api:
+  key: A9152B6A0A96442DA9CA4F6EA8D1CFF1
+appearance:
+  color: black
+events:
+  systemCommandTrigger:
+    enabled: true
+    subscriptions:
+    - command: ~/.octoprint/scripts/startup.sh
+      event: Startup
+    - command: ~/.octoprint/scripts/print_started.sh
+      event: PrintStarted
+    - command: ~/.octoprint/scripts/print_done.rb
+      event: PrintDone
+    - command: ~/.octoprint/scripts/upload.sh %(data)s
+      event: Upload
+    - command: ~/.octoprint/scripts/zchange.sh %(currentZ)s
+      event: ZChange
+feature:
+  gCodeVisualizer: false
+  sdSupport: false
+printerParameters:
+  movementSpeed:
+    x: 3000
+    y: 3000
+    z: 300
+serial:
+  baudrate: 250000
+  port: /dev/ttyACM0
+  timeout: {}
+server:
+  firstRun: false
+system:
+  actions:
+  - action: shutdown
+    command: sudo shutdown -h now
+    confirm: You are about to shutdown the system.
+    name: Shutdown
+  - action: reboot
+    command: sudo shutdown -r now
+    confirm: You are about to reboot the system
+    name: Reboot
+temperature:
+  profiles:
+  - bed: '125'
+    extruder: '230'
+    name: ABS 230
+  - bed: '115'
+    extruder: '220'
+    name: ABS 220
+terminalFilters: []
+webcam:
+  watermark: false

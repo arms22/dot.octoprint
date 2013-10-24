@@ -1,0 +1,53 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+  exit 1
+fi
+if [ $# -eq 1 ]; then
+  opt1=
+  opt2=$1
+fi
+if [ $# -eq 2 ]; then
+  opt1=$1
+  opt2=$2
+fi
+
+# ロックファイル
+lockfile=${TMP:-/tmp}/${0##*/}
+
+# 多重起動防止のために symbolic link を作成する
+# link が作成できたら trap を設定し終了時に link を自動削除する
+# synbolic link が存在しても /proc/${PID} がない場合は
+# ロックファイルが不正に残っていると判断し削除して処理を続行する
+while true
+  do
+  if ln -s $$ ${lockfile} 2> /dev/null
+      then
+        # ロック取得できた
+      break
+  else
+        # ロックファイルが既に存在している場合
+        # ロックファイルから作成元の PID を取得する
+      if [ -d /proc/`ls -l ${lockfile} | sed 's!.* !!g'` ]
+          then
+            # プロセスが存在する場合
+	  sleep 1
+      else
+            # プロセスが存在しない場合はロックファイルを削除してリトライ
+          rm -f ${lockfile}
+      fi
+  fi
+done
+
+# 終わる時は必ず lockfile を削除する
+trap 'rm -f ${lockfile}; exit' 0 1 2 3 11 15
+
+# 実際の処理
+if [ "${opt1}" = "-f" ]; then
+  aplay ${opt2}
+else
+  ~/aquestalkpi/AquesTalkPi ${opt1} "${opt2}" | aplay
+fi
+sleep 1
+
+exit 0
