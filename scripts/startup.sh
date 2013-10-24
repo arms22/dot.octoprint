@@ -1,6 +1,6 @@
 #!/bin/sh
 
 amixer set PCM 78%
-sleep 1
+sleep 2
 # aplay ~/.octoprint/events/startup.wav
-~/aquestalkpi/say -f ~/.octoprint/scripts/startup.wav
+~/.octoprint/scripts/say -f ~/.octoprint/scripts/startup.wav

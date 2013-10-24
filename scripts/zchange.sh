@@ -1,3 +1,3 @@
 #!/bin/sh
 
-~/aquestalkpi/say -k "ゲンザイ/ノタカサワ/<NUMK VAL=$1>ミリ"
+~/.octoprint/scripts/say -k "ゲンザイ/ノタカサワ/<NUMK VAL=$1>ミリ"

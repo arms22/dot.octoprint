@@ -21,5 +21,5 @@ end
 
 message += "/デシタ\""
 
-system "~/aquestalkpi/say -k " + message
+system "~/.octoprint/scripts/say -k " + message
 # system "~/aquestalkpi/AquesTalkPi -k " + message + " | aplay"
